@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Halloween Spin Wheel</title>
+    <style>
+        
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-image: url('/your-halloween-background-image.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+        }
+
+        .container {
+            text-align: center;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 40px 20px;
+            border-radius: 15px;
+            width: 350px;
+            color: #ffffff;
+        }
+
+        .offer-title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #ff8c00;
+        }
+
+        .instructions {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .wheel-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .wheel {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            position: relative;
+            border: 5px solid #ff8c00;
+            overflow: hidden;
+            box-shadow: 0px 0px 10px #ff8c00;
+            transition: transform 4s cubic-bezier(0.33, 1, 0.68, 1);
+        }
+
+        .slice {
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            background-color: orange;
+            clip-path: polygon(0 0, 100% 0, 100% 100%);
+            transform-origin: 100% 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+            color: white;
+            text-align: center;
+        }
+
+        /* Define slice colors and rotations */
+        .slice:nth-child(1) {
+            background-color: #FFA726;
+            transform: rotate(0deg);
+        }
+
+        .slice:nth-child(2) {
+            background-color: #FF7043;
+            transform: rotate(60deg);
+        }
+
+        .slice:nth-child(3) {
+            background-color: #FFCA28;
+            transform: rotate(120deg);
+        }
+
+        .slice:nth-child(4) {
+            background-color: #AB47BC;
+            transform: rotate(180deg);
+        }
+
+        .slice:nth-child(5) {
+            background-color: #42A5F5;
+            transform: rotate(240deg);
+        }
+
+        .slice:nth-child(6) {
+            background-color: #66BB6A;
+            transform: rotate(300deg);
+        }
+
+        .slice span {
+            transform: rotate(-30deg);
+            font-size: 0.8em;
+            /* Adjusted font size */
+            font-weight: 700;
+            color: #000;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
+            padding: 2px;
+            word-break: break-word;
+            text-align: center;
+            line-height: 1.2;
+        }
+
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .email-input {
+            width: 80%;
+            padding: 10px;
+            border-radius: 10px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            background-color: #ffffff;
+        }
+
+        .spin-button {
+            width: 80%;
+            padding: 10px;
+            border-radius: 10px;
+            background-color: #ff8c00;
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        }
+
+        .spin-button:disabled {
+            background-color: #555;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="offer-title">🎃 Halloween Offer 🎃</h1>
+        <h3 class="instructions">Spin and win a spooky prize!</h3>
+
+        <!-- Spin Wheel -->
+        <div class="wheel-container">
+            <div id="wheel" class="wheel">
+                <div class="slice"><span>Freeplays</span></div>
+                <div class="slice"><span>$10 in CashApp</span></div>
+                <div class="slice"><span>Golden Ticket</span></div>
+                <div class="slice"><span>Platinum Ticket</span></div>
+                <div class="slice"><span>Silver Ticket</span></div>
+                <div class="slice"><span>Cashbacks</span></div>
+            </div>
+        </div>
+
+        <!-- Form for Email Input -->
+        <form class="form-container" onsubmit="event.preventDefault(); spin();">
+            <input type="email" id="emailInput" class="email-input" placeholder="Enter your Email" required>
+            <button id="spinButton" class="spin-button" disabled>SPIN TO WIN!</button>
+        </form>
+    </div>
+
+    <script>
+        // JavaScript for Spin Wheel
+
+        const emailInput = document.getElementById("emailInput");
+        const spinButton = document.getElementById("spinButton");
+        const wheel = document.getElementById("wheel");
+        let hasSpun = false;
+
+        // Enable spin button when email is entered
+        emailInput.addEventListener("input", () => {
+            spinButton.disabled = !emailInput.value;
+        });
+
+        function spin() {
+            if (!hasSpun) {
+                const randomRotation = Math.floor(3000 + Math.random() * 2000);
+                wheel.style.transform = `rotate(${randomRotation}deg)`;
+
+                setTimeout(() => {
+                    alert("Congratulations! You've won a prize!");
+                    hasSpun = true;
+                    spinButton.disabled = true;
+                }, 4000);
+            } else {
+                alert("You can only spin once.");
+            }
+        }
+    </script>
+</body>
+
+</html>
